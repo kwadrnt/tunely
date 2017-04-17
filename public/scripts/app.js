@@ -35,7 +35,27 @@ $(document).ready(function() {
   // delete album when its delete button is clicked
   $('#albums').on('click', '.delete-album', handleDeleteAlbumClick);
 
+  // edit album when its edit button is clicked
+  $('#albums').on('click', '.edit-album', handleEditAlbumClick);
+
 });
+
+// when edit button is clicked
+function handleEditAlbumClick(e) {
+  var albumId = $(this).parents('.album').data('album-id');
+  console.log('someone wants to edit album id=' + albumId );
+ 
+  $.ajax({
+    url: '/api/albums/' + albumId,
+    method: 'PUT',
+    success: handleEditAlbumSuccess
+  });
+}
+
+function handleEditAlbumSuccess(data) {
+   $('span').toggleClass('hidden');
+  $('input').toggleClass('hidden');
+}
 
 // when a delete button for an album is clicked
 function handleDeleteAlbumClick(e) {
@@ -90,16 +110,21 @@ function renderAlbum(album) {
                   <li class="list-group-item">
                     <h4 class='inline-header'>Album Name:</h4>
                     <span class='album-name'>${album.name}</span>
+                    <input name='album-name' class='hidden' type ='text'> ${album.name}</input>
                   </li>
 
                   <li class="list-group-item">
                     <h4 class='inline-header'>Artist Name:</h4>
                     <span class='artist-name'>${album.artistName}</span>
+                    <input name='artist-name' class='hidden' type ='text'> ${album.artistName}</input>
+                  </li>
                   </li>
 
                   <li class="list-group-item">
                     <h4 class='inline-header'>Released date:</h4>
                     <span class='album-releaseDate'>${album.releaseDate}</span>
+                    <input name='album-releaseDate' class='hidden' type ='text'> ${album.releaseDate}</input>
+                  </li>
                   </li>
 
                   <li class="list-group-item">
@@ -117,6 +142,7 @@ function renderAlbum(album) {
               <div class='panel-footer'>
                 <button class='btn btn-primary add-song'>Add Song</button>
                 <button class='btn btn-danger delete-album'>Delete Album</button>
+                <button class='btn btn-danger edit-album'>Edit Album</button>
               </div>
             </div>
           </div>
