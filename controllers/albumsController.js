@@ -51,6 +51,11 @@ function destroy(req, res) {
 function update(req, res) {
   // find one album by id, update it based on request body,
   // and send it back as JSON
+  db.Album.findById(req.params.albumId, function(err, foundAlbum) {
+    if(err) { console.log('albumsController.update error', err); }
+    console.log('albumsController.update responding with', foundAlbum);
+    res.json(foundAlbum);
+  });
 }
 
 

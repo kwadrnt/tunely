@@ -32,9 +32,33 @@ $(document).ready(function() {
   // delete song button
   $('#albums').on('click', '.delete-album', handleDeleteAlbumClick);
 
+  // edit album button
+  $('#albums').on('click', '.edit-album', handleEditAlbumClick);
+
   // save song modal save button
   $('#saveSong').on('click', handleNewSongSubmit);
 });
+
+function handleEditAlbumClick(e) {
+  console.log('edit album clicked');
+  var currentAlbumId = $(this).closest('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
+  console.log('id',currentAlbumId);
+  // toggle visibility
+  $(this).toggle();
+   $.ajax({
+    url: '/api/albums/' + albumId,
+    method: 'PUT',
+    success: handleEditAlbumSuccess
+  });
+}
+
+function handleEditAlbumSuccess(albums) {
+  var editAlbumId = data._id;
+  console.log('removing the following album from the page:', editAlbumId);
+  // update individual album ... 
+  // $('div[data-album-id=' + editAlbumId + ']').remove();
+}
+
 
 function renderMultipleAlbums(albums) {
   albums.forEach(function(album) {
