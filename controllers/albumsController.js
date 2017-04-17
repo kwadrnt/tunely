@@ -51,10 +51,16 @@ function destroy(req, res) {
 function update(req, res) {
   // find one album by id, update it based on request body,
   // and send it back as JSON
+  console.log('updating with data', req.body);
   db.Album.findById(req.params.albumId, function(err, foundAlbum) {
     if(err) { console.log('albumsController.update error', err); }
-    console.log('albumsController.update responding with', foundAlbum);
-    res.json(foundAlbum);
+    foundAlbum.artistName = req.body.artistName;
+    foundAlbum.name = req.body.name;
+    foundAlbum.releaseDate = req.body.releaseDate;
+    foundAlbum.save(function(err, savedAlbum) {
+      if(err) { console.log('saving altered album failed'); }
+      res.json(savedAlbum);
+    });
   });
 }
 
