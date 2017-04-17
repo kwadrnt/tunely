@@ -7,15 +7,16 @@
     <title>tunely</title>
 
     <!-- STYLESHEETS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
 
     <!-- VENDOR SCRIPTS -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
 
     <!-- APPLICATION SCRIPTS -->
-    <script src="/scripts/app.js"></script>
+    <script src="scripts/app.js"></script>
   </head>
   <body>
     <div class="jumbotron">
@@ -24,6 +25,9 @@
         <p>Your music binder!</p>
       </div>
     </div>
+
+
+
 
     <!-- BEGIN FORM SAMPLE -->
 
@@ -87,17 +91,78 @@
     </section>
 
      <!--   END FORM SAMPLE -->
-     
+
+
+
+
     <section class="container">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <h2>Albums</h2>
         </div>
       </div>
+      <!-- albums! -->
+      <div id='albums'>
+        <script id='album-template' type='text/x-handlebars-template'>
+          <!-- one album -->
+          <div class="row album" data-album-id="{{_id}}">
 
-      <!-- albums container! -->
-      <div id='albums'></div>
+            <div class="col-md-10 col-md-offset-1">
+              <div class="panel panel-default">
+                <div class="panel-body">
 
+
+                <!-- begin album internal row -->
+                  <div class='row'>
+                    <div class="col-md-3 col-xs-12 thumbnail album-art">
+                      <img src="images/800x800.png" alt="album image">
+                    </div>
+
+                    <div class="col-md-9 col-xs-12">
+                      <ul class="list-group">
+                        <li class="list-group-item">
+                          <h4 class='inline-header'>Album Name:</h4>
+                          <span class='album-name'>{{name}}</span>
+                        </li>
+
+                        <li class="list-group-item">
+                          <h4 class='inline-header'>Artist Name:</h4>
+                          <span class='artist-name'>{{artistName}}</span>
+                        </li>
+
+                        <li class="list-group-item">
+                          <h4 class='inline-header'>Released date:</h4>
+                          <span class='album-releaseDate'>{{releaseDate}}</span>
+                        </li>
+
+
+                        <li class="list-group-item">
+                          <h4 class="inline-header">Songs:</h4>
+                          <span>&ndash; {{#each songs}} ({{trackNumber}}) {{name}} &ndash;  {{/each}}</span>
+                        </li>
+
+                      </ul>
+                    </div>
+
+                  </div>
+                  <!-- end of album internal row -->
+
+                  <div class='panel-footer'>
+                    <div class='panel-footer'>
+                      <button class='btn btn-primary add-song'>Add Song</button>
+                      <button class='btn btn-primary delete-album'>Delete Album</button>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end one album -->
+        </script>
+
+      </div>
     </section>
 
     <!-- begin songModal: this is not visible until you call .modal() on it -->
@@ -119,11 +184,11 @@
                 </div>
               </div>
 
-              <!-- Text input-->
+              <!-- Number input-->
               <div class="form-group">
                 <label class="col-md-4 control-label" for="trackNumber">Track Number</label>
                 <div class="col-md-4">
-                  <input id="trackNumber" name="trackNumber" type="text" placeholder="" class="form-control input-md">
+                  <input id="trackNumber" name="trackNumber" type="number" placeholder="" class="form-control input-md">
                 </div>
               </div>
             </fieldset>

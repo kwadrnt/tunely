@@ -4,8 +4,6 @@
 
 var db = require('../models');
 
-
-
 // GET /api/albums
 function index(req, res) {
   // send back all albums as JSON
@@ -30,15 +28,23 @@ function create(req, res) {
   });
 }
 
-
 // GET /api/albums/:albumId
 function show(req, res) {
   // find one album by id and send it back as JSON
+  db.Album.findById(req.params.albumId, function(err, foundAlbum) {
+    if(err) { console.log('albumsController.show error', err); }
+    console.log('albumsController.show responding with', foundAlbum);
+    res.json(foundAlbum);
+  });
 }
 
 // DELETE /api/albums/:albumId
 function destroy(req, res) {
   // find one album by id, delete it, and send it back as JSON
+  db.Album.findOneAndRemove({ _id: req.params.albumId }, function(err, foundAlbum){
+    // note you could send just send 204, but we're sending 200 and the deleted entity
+    res.json(foundAlbum);
+  });
 }
 
 // PUT or PATCH /api/albums/:albumId
